@@ -173,7 +173,12 @@ public class ApplicationMain {
                     return;
                 } else {//如果不为空，则进行正常登陆
                     System.out.print("请输入用户ID：");
-                    Long userId = scanner.nextLong();
+                    String input = scanner.next();
+                    while (!utils.isDigit(input)) {
+                        System.out.println("您输入的不是数字，请重新输入:");
+                        input = scanner.next();
+                    }
+                    Long userId = Long.parseLong(input);
                     Iterator<User> iterator = users.iterator();
                     //遍历每一个用户，判断他们的id存不存在
                     while (iterator.hasNext()) {
@@ -612,7 +617,7 @@ public class ApplicationMain {
     private void order() {
         //判断是否已经到期
         if (CURRENT_USER.getDeadlineDate().getTime() > (new Date()).getTime()) {
-            System.out.println("请选择您要点播的类型：1.电影\t2.音乐\t3.动漫");
+            System.out.println("请选择您要点播的类型：1.电影\t2.音乐\t3.动漫\4.查找");
             int num = scanner.nextInt();
             while (num > 3 || num < 1) {
                 System.out.println("输入有误，请重新输入：");
@@ -693,7 +698,6 @@ public class ApplicationMain {
                             System.out.println("点播 海贼王 成功！");
                             return;
                     }
-
             }
         } else {
             System.out.println("充值卡已经到期，请重新充值！");
